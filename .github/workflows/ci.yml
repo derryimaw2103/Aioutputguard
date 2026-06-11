@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - experiment
+  pull_request:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Node ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version:
+          - 20.x
+          - 22.x
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect package.json
+        id: package
+        shell: bash
+        run: |
+          if [ -f package.json ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Bootstrap placeholder
+        if: steps.package.outputs.exists == 'false'
+        run: echo "No package.json yet. CI will run full checks after the Node CLI scaffold is added."
+
+      - name: Setup Node.js
+        if: steps.package.outputs.exists == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        if: steps.package.outputs.exists == 'true'
+        shell: bash
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Run available quality scripts
+        if: steps.package.outputs.exists == 'true'
+        shell: bash
+        run: |
+          run_if_present() {
+            local script="$1"
+            if node -e "const p=require('./package.json'); process.exit(p.scripts && p.scripts[process.argv[1]] ? 0 : 1)" "$script"; then
+              npm run "$script"
+            else
+              echo "No $script script; skipping."
+            fi
+          }
+
+          run_if_present format:check
+          run_if_present lint
+          run_if_present typecheck
+          run_if_present test
+          run_if_present build
