@@ -1,0 +1,62 @@
+name: Package Smoke Test
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  npm-pack:
+    name: npm pack dry run
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect package.json
+        id: package
+        shell: bash
+        run: |
+          if [ -f package.json ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Bootstrap placeholder
+        if: steps.package.outputs.exists == 'false'
+        run: echo "No package.json yet. Package smoke test will run after the CLI package is scaffolded."
+
+      - name: Setup Node.js
+        if: steps.package.outputs.exists == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Install dependencies
+        if: steps.package.outputs.exists == 'true'
+        shell: bash
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Build if available
+        if: steps.package.outputs.exists == 'true'
+        shell: bash
+        run: |
+          if node -e "const p=require('./package.json'); process.exit(p.scripts && p.scripts.build ? 0 : 1)"; then
+            npm run build
+          else
+            echo "No build script; skipping."
+          fi
+
+      - name: Validate package contents
+        if: steps.package.outputs.exists == 'true'
+        run: npm pack --dry-run
