@@ -5,6 +5,8 @@ node_modules/
 dist/
 coverage/
 *.tsbuildinfo
+eslint-report.json
+report.sarif
 
 # Logs
 npm-debug.log*

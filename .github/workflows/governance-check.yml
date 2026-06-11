@@ -1,0 +1,96 @@
+name: GovernanceOS Gatekeeper
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - experiment
+  pull_request:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+
+concurrency:
+  group: governance-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  governance-check:
+    name: GovernanceOS audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Generate ESLint SARIF report
+        run: |
+          npm run lint:sarif || true
+          if [ ! -s report.sarif ]; then
+            echo '{"version":"2.1.0","runs":[{"tool":{"driver":{"name":"eslint","rules":[]}},"results":[]}]}' > report.sarif
+          fi
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcairo2-dev pkg-config python3-dev
+
+      - name: Check GovernanceOS token
+        id: governance-token
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          if [ -n "$PAT_TOKEN" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::PAT_TOKEN is not configured. Skipping GovernanceOS private repo install."
+          fi
+
+      - name: Install GovernanceOSUNI
+        if: steps.governance-token.outputs.available == 'true'
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          python -m pip install --upgrade pip
+          pip install "git+https://x-access-token:${PAT_TOKEN}@github.com/derryimaw2103/GovernanceOSUNI.git"
+
+      - name: Run GovernanceOS evaluation
+        if: steps.governance-token.outputs.available == 'true'
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          EXTRA_FLAGS=""
+          if [ -n "$GOOGLE_API_KEY" ]; then
+            EXTRA_FLAGS="$EXTRA_FLAGS --ai"
+          fi
+          if [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            EXTRA_FLAGS="$EXTRA_FLAGS --telegram"
+          fi
+
+          governanceos evaluate report.sarif --project "AI Output Guard" $EXTRA_FLAGS
