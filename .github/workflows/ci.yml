@@ -1,4 +1,4 @@
-name: CI
+name: Node CI (Quality Gate)
 
 on:
   push:
@@ -20,7 +20,7 @@ permissions:
   contents: read
 
 jobs:
-  quality:
+  quality-gate:
     name: Node ${{ matrix.node-version }}
     runs-on: ubuntu-latest
     strategy:
@@ -32,53 +32,28 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Detect package.json
-        id: package
-        shell: bash
-        run: |
-          if [ -f package.json ]; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Bootstrap placeholder
-        if: steps.package.outputs.exists == 'false'
-        run: echo "No package.json yet. CI will run full checks after the Node CLI scaffold is added."
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        if: steps.package.outputs.exists == 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
 
       - name: Install dependencies
-        if: steps.package.outputs.exists == 'true'
-        shell: bash
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
+        run: npm ci
 
-      - name: Run available quality scripts
-        if: steps.package.outputs.exists == 'true'
-        shell: bash
-        run: |
-          run_if_present() {
-            local script="$1"
-            if node -e "const p=require('./package.json'); process.exit(p.scripts && p.scripts[process.argv[1]] ? 0 : 1)" "$script"; then
-              npm run "$script"
-            else
-              echo "No $script script; skipping."
-            fi
-          }
+      - name: Run Prettier format check
+        run: npm run format:check
 
-          run_if_present format:check
-          run_if_present lint
-          run_if_present typecheck
-          run_if_present test
-          run_if_present build
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run TypeScript type checking
+        run: npm run typecheck
+
+      - name: Run Vitest unit tests
+        run: npm test
+
+      - name: Build package
+        run: npm run build
