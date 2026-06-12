@@ -142,3 +142,9 @@ experiment -> dev -> main
   - report JSON tetap ditulis
   - clean output tidak ditulis saat validasi gagal
   - issue dan retry guidance tampil sesuai jenis kegagalan
+
+### Trial Kit Disiapkan
+
+- Folder `examples/trial/` ditambahkan sebagai tempat menaruh raw output AI nyata dan schema yang sesuai.
+- Tujuannya supaya trial berikutnya bisa dilakukan tanpa membuat struktur file dari nol lagi.
+- README kecil di folder itu menjelaskan command yang perlu dijalankan saat data nyata sudah siap.

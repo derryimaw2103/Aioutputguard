@@ -222,3 +222,19 @@ Alternatif: Menunda dokumentasi sampai setelah code stabil penuh. Ditolak karena
 Rollback: Jika struktur examples perlu diubah nanti, update README dan memory tanpa mengubah keputusan bahwa contoh penggunaan tetap wajib ada.
 
 Status: Aktif.
+
+## D-014: Trial Kit Ditambahkan Untuk Output AI Nyata
+
+Tanggal: 2026-06-12
+
+Keputusan: Folder `examples/trial/` ditambahkan sebagai trial kit standar untuk menaruh raw output AI nyata dan schema yang sesuai sebelum menjalankan validasi.
+
+Alasan: Owner ingin langkah berikutnya dikerjakan. Trial kit membuat proses itu jelas, mudah diulang, dan tidak perlu membuat file dari nol tiap kali.
+
+Trade-off: Ada sedikit tambahan file contoh di repo, tetapi helper ini membuat trial nyata jauh lebih cepat dilakukan.
+
+Alternatif: Menunggu pipeline aktif dulu tanpa template lokal. Ditolak karena akan memperlambat validasi manual.
+
+Rollback: Jika trial kit tidak diperlukan lagi, folder bisa dipindah atau dihapus setelah workflow trial stabil.
+
+Status: Aktif.

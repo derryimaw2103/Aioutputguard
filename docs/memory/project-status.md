@@ -62,6 +62,7 @@ b94651f Move GovernanceOS policy under GitHub config
 - Folder `examples/article/` sekarang tersedia sebagai contoh input, schema, expected clean output, dan expected report.
 - Example CLI sudah diverifikasi jalan secara lokal.
 - Example failure untuk `schema_deviation` dan `truncated_output` sudah diverifikasi jalan secara lokal.
+- Folder `examples/trial/` sekarang tersedia sebagai kit untuk mencoba output AI nyata.
 - Quality gate lokal tetap hijau setelah penambahan README dan examples.
 
 ## Yang Belum Selesai
@@ -76,9 +77,11 @@ b94651f Move GovernanceOS policy under GitHub config
 
 Urutan kerja berikutnya:
 
-1. Coba CLI pada satu pipeline AI automation nyata milik owner.
-2. Jika stabil, promosikan dari `experiment` ke `dev`.
-3. Setelah review dan semua gate hijau, promosikan dari `dev` ke `main`.
+1. Isi `examples/trial/raw-output.txt` dan `examples/trial/schema.json` dengan data nyata.
+2. Jalankan trial terhadap output AI nyata milik owner.
+3. Catat hasil trial di `docs/memory/journey.md`.
+4. Jika stabil, promosikan dari `experiment` ke `dev`.
+5. Setelah review dan semua gate hijau, promosikan dari `dev` ke `main`.
 
 ## File Lokal Yang Sengaja Tidak Di-commit
 
