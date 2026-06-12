@@ -269,6 +269,158 @@ describe("ai-output-guard check", () => {
     expect(result.exitCode).toBe(0);
     expect(await readFixture("clean-output.json")).toBe('{"title":"Rahasia Miliarder"}');
   });
+
+  it("passes with chatty preamble before JSON", async () => {
+    await writeFixture(
+      "raw-output.txt",
+      ["Boleh, ini JSON-nya:", '{ "title": "Rahasia Miliarder" }', "Terima kasih."].join("\n")
+    );
+    await writeFixture("schema.json", titleSchema());
+
+    const result = await runCheck(
+      baseOptions({
+        input: "raw-output.txt",
+        schema: "schema.json",
+        cleanOutput: "clean-output.json",
+        report: "report.json",
+        verboseReport: true
+      }),
+      workspace
+    );
+
+    expect(result.exitCode).toBe(0);
+    expect(result.report.status).toBe("passed");
+    expect(result.report.cleaned).toBe(true);
+    expect(result.report.issues).toEqual([]);
+    expect("cleaningActions" in result.report ? result.report.cleaningActions : []).toContain(
+      "removed_text_outside_json"
+    );
+    await expect(fileExists("clean-output.json")).resolves.toBe(true);
+    await expect(fileExists("report.json")).resolves.toBe(true);
+  });
+
+  it("passes with markdown code block around JSON", async () => {
+    await writeFixture(
+      "raw-output.txt",
+      ["```json", '{ "title": "Rahasia Miliarder" }', "```"].join("\n")
+    );
+    await writeFixture("schema.json", titleSchema());
+
+    const result = await runCheck(
+      baseOptions({
+        input: "raw-output.txt",
+        schema: "schema.json",
+        cleanOutput: "clean-output.json",
+        report: "report.json",
+        verboseReport: true
+      }),
+      workspace
+    );
+
+    expect(result.exitCode).toBe(0);
+    expect(result.report.status).toBe("passed");
+    expect(result.report.cleaned).toBe(true);
+    expect("cleaningActions" in result.report ? result.report.cleaningActions : []).toContain(
+      "removed_markdown_code_block"
+    );
+    await expect(fileExists("clean-output.json")).resolves.toBe(true);
+    await expect(fileExists("report.json")).resolves.toBe(true);
+  });
+
+  it("fails on truncated JSON with the expected issue", async () => {
+    await writeFixture(
+      "raw-output.txt",
+      '{ "title": "Misteri Laut Dalam", "chapters": [ { "narasi": "Di kedalaman laut...'
+    );
+    await writeFixture("schema.json", titleSchema());
+
+    const result = await runCheck(
+      baseOptions({
+        input: "raw-output.txt",
+        schema: "schema.json",
+        cleanOutput: "clean-output.json",
+        report: "report.json"
+      }),
+      workspace
+    );
+
+    expect(result.exitCode).toBe(1);
+    expect(result.report.status).toBe("failed");
+    expect(result.report.issues[0]?.type).toBe("truncated_output");
+    expect(result.report.suggestedRetryPrompt).toBeNull();
+    await expect(fileExists("clean-output.json")).resolves.toBe(false);
+    await expect(fileExists("report.json")).resolves.toBe(true);
+  });
+
+  it("fails on unescaped quotes and returns a retry prompt", async () => {
+    await writeFixture(
+      "raw-output.txt",
+      '{ "script": "Elon Musk berkata, "Saya suka Mars", lalu tertawa." }'
+    );
+    await writeFixture(
+      "schema.json",
+      JSON.stringify({
+        type: "object",
+        required: ["script"],
+        properties: {
+          script: { type: "string" }
+        },
+        additionalProperties: false
+      })
+    );
+
+    const result = await runCheck(
+      baseOptions({
+        input: "raw-output.txt",
+        schema: "schema.json",
+        cleanOutput: "clean-output.json",
+        report: "report.json"
+      }),
+      workspace
+    );
+
+    expect(result.exitCode).toBe(1);
+    expect(result.report.status).toBe("failed");
+    expect(result.report.issues[0]?.type).toBe("unescaped_quote");
+    expect(result.report.suggestedRetryPrompt).toContain("Escape all double quotes");
+    await expect(fileExists("clean-output.json")).resolves.toBe(false);
+    await expect(fileExists("report.json")).resolves.toBe(true);
+  });
+
+  it("fails on schema deviation with expected issue types", async () => {
+    await writeFixture("raw-output.txt", '{ "background_image": "hutan pinus" }');
+    await writeFixture(
+      "schema.json",
+      JSON.stringify({
+        type: "object",
+        required: ["visual_keyword"],
+        properties: {
+          visual_keyword: { type: "string" }
+        },
+        additionalProperties: false
+      })
+    );
+
+    const result = await runCheck(
+      baseOptions({
+        input: "raw-output.txt",
+        schema: "schema.json",
+        cleanOutput: "clean-output.json",
+        report: "report.json"
+      }),
+      workspace
+    );
+
+    expect(result.exitCode).toBe(1);
+    expect(result.report.status).toBe("failed");
+    expect(result.report.issues.map((issue) => issue.type)).toEqual([
+      "schema_deviation",
+      "unexpected_field"
+    ]);
+    expect(result.report.suggestedRetryPrompt).toContain("exactly follows this schema");
+    await expect(fileExists("clean-output.json")).resolves.toBe(false);
+    await expect(fileExists("report.json")).resolves.toBe(true);
+  });
 });
 
 function baseOptions(overrides: Parameters<typeof runCheck>[0]): Parameters<typeof runCheck>[0] {
