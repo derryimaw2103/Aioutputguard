@@ -148,3 +148,9 @@ experiment -> dev -> main
 - Folder `examples/trial/` ditambahkan sebagai tempat menaruh raw output AI nyata dan schema yang sesuai.
 - Tujuannya supaya trial berikutnya bisa dilakukan tanpa membuat struktur file dari nol lagi.
 - README kecil di folder itu menjelaskan command yang perlu dijalankan saat data nyata sudah siap.
+
+### Trial Kit Diuji Dengan Input Valid
+
+- File aktif `examples/trial/raw-output.txt` dan `examples/trial/schema.json` diisi dengan contoh output yang sudah lolos di `examples/article/`.
+- Command trial dijalankan ulang dan hasilnya `PASSED`.
+- Report menunjukkan cleaning actions, parser metadata, dan schema metadata sesuai perilaku yang diharapkan.
