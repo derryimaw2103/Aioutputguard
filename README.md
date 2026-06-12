@@ -42,7 +42,7 @@ Read Project Memory before continuing work so product context, branch discipline
 This repository starts with Actions that support the Phase 0 CLI plan:
 
 - CI: installs dependencies and runs format, lint, typecheck, test, and build.
-- Security: dependency review on pull requests plus CodeQL.
+- Security: runs `npm audit --audit-level=high`; CodeQL runs only when repository settings support it.
 - Package smoke test: validates `npm pack --dry-run` for release tags or manual checks.
 - GovernanceOS Gatekeeper: generates SARIF from ESLint and evaluates the project with GovernanceOSUNI.
 - Labeler and Dependabot: help triage PRs and keep dependencies current.

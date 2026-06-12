@@ -89,6 +89,13 @@ Jika GovernanceOS gagal:
 - Pastikan `PAT_TOKEN` tersedia di GitHub secrets.
 - Pastikan `.github/governance/policy.yaml` valid.
 - Pastikan `npm run lint:sarif` menghasilkan `report.sarif`.
+- Jika gagal di `setup-python`, jangan aktifkan `cache: pip` kecuali repo punya file dependency Python seperti `requirements.txt` atau `pyproject.toml`.
+
+Jika Security workflow gagal:
+
+- Cek `npm audit --audit-level=high` terlebih dahulu.
+- Dependency Review GitHub tidak dipakai saat ini karena dapat gagal jika Dependency Graph belum aktif atau belum tersedia.
+- CodeQL dibuat optional untuk repo private atau repo tanpa dukungan GitHub Advanced Security.
 
 Jika branch berantakan:
 

@@ -126,3 +126,35 @@ Alternatif: Pakai `@microsoft/eslint-formatter-sarif`. Ditolak karena menambah d
 Rollback: Kembali memakai formatter eksternal jika script lokal tidak cukup untuk kebutuhan SARIF lanjutan.
 
 Status: Aktif.
+
+## D-008: Security Workflow Tidak Bergantung Pada Dependency Review
+
+Tanggal: 2026-06-12
+
+Keputusan: Security workflow memakai `npm audit --audit-level=high` sebagai pemeriksaan dependency utama. `actions/dependency-review-action` tidak dipakai untuk saat ini. CodeQL hanya berjalan jika repository tidak private.
+
+Alasan: Workflow `Dependency Review` gagal karena dependency review tidak didukung pada repo ini saat Dependency Graph atau fitur GitHub terkait belum aktif. Owner juga mengonfirmasi CodeQL tidak bisa dipakai pada repo private saat ini.
+
+Trade-off: Kita kehilangan diff-level dependency review dari GitHub, tetapi tetap punya audit dependency yang stabil dan bisa berjalan di repo ini.
+
+Alternatif: Mengaktifkan Dependency Graph/GitHub Advanced Security dan mempertahankan Dependency Review serta CodeQL. Ditunda karena bergantung pada setting/plan GitHub, bukan kebutuhan produk Phase 0.
+
+Rollback: Jika fitur GitHub sudah tersedia, tambahkan kembali `actions/dependency-review-action` dan aktifkan CodeQL penuh.
+
+Status: Aktif.
+
+## D-009: GovernanceOS Workflow Tidak Menggunakan Pip Cache
+
+Tanggal: 2026-06-12
+
+Keputusan: `cache: pip` dihapus dari step `actions/setup-python` pada GovernanceOS workflow.
+
+Alasan: Repo ini adalah project Node.js. `setup-python` dengan `cache: pip` gagal jika tidak menemukan file dependency Python seperti `requirements.txt` atau `pyproject.toml`.
+
+Trade-off: Install Python dependency GovernanceOS tidak memakai cache pip, tetapi workflow tidak gagal sebelum audit berjalan.
+
+Alternatif: Menambahkan file Python dependency dummy. Ditolak karena akan mengotori repo Node dan membingungkan scope produk.
+
+Rollback: Aktifkan kembali pip cache jika nanti repo memang punya dependency Python yang sah.
+
+Status: Aktif.

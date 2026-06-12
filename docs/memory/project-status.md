@@ -49,7 +49,7 @@ b94651f Move GovernanceOS policy under GitHub config
   - build simple/verbose report.
 - Test Vitest untuk 5 kasus wajib PRD dan beberapa edge case CLI.
 - CI quality gate: format, lint, typecheck, test, build.
-- Security workflow: dependency review dan CodeQL.
+- Security workflow: `npm audit --audit-level=high` dan CodeQL optional jika repo mendukung.
 - Package smoke test: `npm pack --dry-run`.
 - GovernanceOS oversight workflow di `.github/workflows/governance-check.yml`.
 - Governance policy di `.github/governance/policy.yaml`.

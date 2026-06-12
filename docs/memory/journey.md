@@ -70,3 +70,12 @@ experiment -> dev -> main
 
 - Folder `docs/memory/` dibuat sebagai dokumentasi hidup.
 - Tujuannya agar perjalanan, keputusan, status, dan handoff project tidak hilang di chat.
+
+### Workflow Security Dan Governance Diperbaiki
+
+- Owner melaporkan `GovernanceOS Gatekeeper` gagal pada event push dan pull request.
+- Log menunjukkan `actions/setup-python@v6` gagal karena `cache: pip` aktif tetapi repo Node ini tidak punya `requirements.txt` atau `pyproject.toml`.
+- `cache: pip` dihapus dari GovernanceOS workflow.
+- Owner juga melaporkan `Dependency Review` gagal dan CodeQL tidak bisa dipakai pada repo private.
+- Security workflow diganti ke `npm audit --audit-level=high` sebagai pemeriksaan dependency yang stabil untuk repo ini.
+- CodeQL dibuat optional dan hanya berjalan ketika repo tidak private.
