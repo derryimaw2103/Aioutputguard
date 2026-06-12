@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "required": ["title", "chapters"],
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "chapters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["narasi"],
+        "properties": {
+          "narasi": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,7 @@
+Berikut hasilnya:
+
+```json
+{
+  "background_image": "hutan pinus berkabut"
+}
+```

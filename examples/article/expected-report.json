@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "cleaned": true,
+  "cleanOutputPath": "examples/article/generated-clean-output.json",
+  "issues": [],
+  "suggestedRetryPrompt": null
+}

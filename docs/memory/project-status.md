@@ -55,6 +55,18 @@ b94651f Move GovernanceOS policy under GitHub config
 - Governance policy di `.github/governance/policy.yaml`.
 - Labeler dan Dependabot untuk membantu maintenance.
 - Project Memory di `docs/memory/`.
+- Semua workflow utama terakhir sudah hijau setelah `PAT_TOKEN` diperbarui.
+- GovernanceOS Gatekeeper sudah berhasil menjalankan install dan evaluation path dengan konfigurasi terbaru.
+- `implementation_plan.md` sudah diperbarui menjadi roadmap lanjutan Phase 0 yang mudah diikuti oleh junior engineer atau AI model yang lebih rendah.
+- README sekarang sudah berisi usage Phase 0, flag, exit code, branch flow, dan contoh command.
+- Folder `examples/article/` sekarang tersedia sebagai contoh input, schema, expected clean output, dan expected report.
+- Example CLI sudah diverifikasi jalan secara lokal.
+- Example failure untuk `schema_deviation` dan `truncated_output` sudah diverifikasi jalan secara lokal.
+- Folder `examples/trial/` sekarang tersedia sebagai kit untuk mencoba output AI nyata.
+- Trial kit sudah diuji dengan output yang valid dan menghasilkan `PASSED`.
+- Trial nyata pertama di project `YoutubeDerry-codex-review-repos-for-user-friendly-patches` berhasil pada `data/news_briefing/briefing_2026-06-11.json`.
+- Trial itu lolos tanpa cleaning karena output sumber sudah berupa JSON bersih.
+- Quality gate lokal tetap hijau setelah penambahan README dan examples.
 
 ## Yang Belum Selesai
 
@@ -63,6 +75,15 @@ b94651f Move GovernanceOS policy under GitHub config
 - Belum dipakai di satu pipeline AI automation milik owner.
 - Belum ada examples folder untuk sample raw output dan schema.
 - Belum ada release/tag npm.
+
+## Fokus Berikutnya
+
+Urutan kerja berikutnya:
+
+1. Coba trial berikutnya dengan artefak lain dari project nyata itu, misalnya title test JSON.
+2. Catat hasil trial di `docs/memory/journey.md`.
+3. Jika stabil, promosikan dari `experiment` ke `dev`.
+4. Setelah review dan semua gate hijau, promosikan dari `dev` ke `main`.
 
 ## File Lokal Yang Sengaja Tidak Di-commit
 
