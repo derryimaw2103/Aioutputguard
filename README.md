@@ -26,15 +26,23 @@ AI Output Guard is an LLM output contract guard. The Phase 0 target is a Node.js
 ## Branch Strategy
 
 - `main`: stable branch. Keep this branch releasable.
-- `dev`: integration branch for Phase 0 development.
-- `experiment`: sandbox branch for spikes, tests, and risky ideas.
+- `dev`: integration branch for validated development work.
+- `experiment`: default branch for new work, spikes, tests, workflow changes, and risky ideas.
 
 Recommended flow: `experiment` -> `dev` -> `main` through pull requests.
+
+## Project Memory
+
+Project history, decisions, handoff notes, and operating rules live in [`docs/memory/README.md`](docs/memory/README.md).
+
+Read Project Memory before continuing work so product context, branch discipline, and governance decisions stay consistent.
 
 ## GitHub Actions
 
 This repository starts with Actions that support the Phase 0 CLI plan:
 
-- CI: installs dependencies when `package.json` exists and runs available scripts for format, lint, typecheck, test, and build.
-- Security: dependency review on pull requests plus CodeQL when JavaScript or TypeScript source exists.
+- CI: installs dependencies and runs format, lint, typecheck, test, and build.
+- Security: dependency review on pull requests plus CodeQL.
 - Package smoke test: validates `npm pack --dry-run` for release tags or manual checks.
+- GovernanceOS Gatekeeper: generates SARIF from ESLint and evaluates the project with GovernanceOSUNI.
+- Labeler and Dependabot: help triage PRs and keep dependencies current.
