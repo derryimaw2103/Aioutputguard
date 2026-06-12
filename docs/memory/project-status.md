@@ -64,6 +64,8 @@ b94651f Move GovernanceOS policy under GitHub config
 - Example failure untuk `schema_deviation` dan `truncated_output` sudah diverifikasi jalan secara lokal.
 - Folder `examples/trial/` sekarang tersedia sebagai kit untuk mencoba output AI nyata.
 - Trial kit sudah diuji dengan output yang valid dan menghasilkan `PASSED`.
+- Trial nyata pertama di project `YoutubeDerry-codex-review-repos-for-user-friendly-patches` berhasil pada `data/news_briefing/briefing_2026-06-11.json`.
+- Trial itu lolos tanpa cleaning karena output sumber sudah berupa JSON bersih.
 - Quality gate lokal tetap hijau setelah penambahan README dan examples.
 
 ## Yang Belum Selesai
@@ -78,7 +80,7 @@ b94651f Move GovernanceOS policy under GitHub config
 
 Urutan kerja berikutnya:
 
-1. Coba trial dengan output AI nyata milik owner.
+1. Coba trial berikutnya dengan artefak lain dari project nyata itu, misalnya title test JSON.
 2. Catat hasil trial di `docs/memory/journey.md`.
 3. Jika stabil, promosikan dari `experiment` ke `dev`.
 4. Setelah review dan semua gate hijau, promosikan dari `dev` ke `main`.

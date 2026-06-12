@@ -154,3 +154,14 @@ experiment -> dev -> main
 - File aktif `examples/trial/raw-output.txt` dan `examples/trial/schema.json` diisi dengan contoh output yang sudah lolos di `examples/article/`.
 - Command trial dijalankan ulang dan hasilnya `PASSED`.
 - Report menunjukkan cleaning actions, parser metadata, dan schema metadata sesuai perilaku yang diharapkan.
+
+### Trial Nyata Di Project Lain Berhasil
+
+- Target project nyata yang diberikan owner adalah `C:\botyoutube\YoutubeDerry-codex-review-repos-for-user-friendly-patches`.
+- Artefak yang diuji: `data/news_briefing/briefing_2026-06-11.json`.
+- Schema sementara disusun mengikuti struktur output briefing harian.
+- Hasil trial:
+  - status `PASSED`
+  - `cleaned: false` karena input sudah JSON bersih
+  - file clean output dan report berhasil dibuat
+- Ini membuktikan tool cocok dipakai di pipeline project nyata tanpa perlu menambah cleaning ekstra kalau sumber output sudah rapi.
