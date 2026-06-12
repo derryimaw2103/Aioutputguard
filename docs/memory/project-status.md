@@ -61,6 +61,7 @@ b94651f Move GovernanceOS policy under GitHub config
 - README sekarang sudah berisi usage Phase 0, flag, exit code, branch flow, dan contoh command.
 - Folder `examples/article/` sekarang tersedia sebagai contoh input, schema, expected clean output, dan expected report.
 - Example CLI sudah diverifikasi jalan secara lokal.
+- Example failure untuk `schema_deviation` dan `truncated_output` sudah diverifikasi jalan secara lokal.
 - Quality gate lokal tetap hijau setelah penambahan README dan examples.
 
 ## Yang Belum Selesai

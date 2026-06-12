@@ -130,3 +130,15 @@ experiment -> dev -> main
   - `npm run typecheck`
   - `npm run build`
   - `npm pack --dry-run`
+
+### Failure Case Dicoba Secara Manual
+
+- Owner meminta simulasi contoh gagal agar perilaku tool lebih mudah dipahami.
+- Dua skenario dijalankan:
+  - `schema_deviation`
+  - `truncated_output`
+- Hasil yang terverifikasi:
+  - terminal mengembalikan status `FAILED`
+  - report JSON tetap ditulis
+  - clean output tidak ditulis saat validasi gagal
+  - issue dan retry guidance tampil sesuai jenis kegagalan
