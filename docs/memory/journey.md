@@ -192,3 +192,13 @@ experiment -> dev -> main
   - report writing
   - exit code
   - suggested retry prompt untuk quote rusak dan schema deviation
+
+### PHASE 0 Validation Note Ditambahkan
+
+- File ringkas `PHASE_0_VALIDATION.md` ditambahkan sebagai penanda sebelum promote.
+- Isinya merangkum:
+  - 5 failure pattern
+  - exit code behavior
+  - overwrite safety
+  - real pipeline trial
+  - known limitations Phase 0

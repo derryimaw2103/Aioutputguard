@@ -252,6 +252,53 @@ describe("ai-output-guard check", () => {
     );
   });
 
+  it("keeps the input file unchanged without overwrite", async () => {
+    await writeFixture(
+      "raw-output.txt",
+      ["```json", '{ "title": "Rahasia Miliarder" }', "```"].join("\n")
+    );
+    await writeFixture("schema.json", titleSchema());
+    const original = await readFixture("raw-output.txt");
+
+    const result = await runCheck(
+      baseOptions({
+        input: "raw-output.txt",
+        schema: "schema.json",
+        cleanOutput: "clean-output.json",
+        report: "report.json"
+      }),
+      workspace
+    );
+
+    expect(result.exitCode).toBe(0);
+    expect(await readFixture("raw-output.txt")).toBe(original);
+  });
+
+  it("overwrites the input file only when overwrite is enabled", async () => {
+    await writeFixture(
+      "raw-output.txt",
+      ["```json", '{ "title": "Rahasia Miliarder" }', "```"].join("\n")
+    );
+    await writeFixture("schema.json", titleSchema());
+
+    const result = await runCheck(
+      baseOptions({
+        input: "raw-output.txt",
+        schema: "schema.json",
+        report: "report.json",
+        overwrite: true,
+        pretty: true
+      }),
+      workspace
+    );
+
+    expect(result.exitCode).toBe(0);
+    expect(await readFixture("raw-output.txt")).toBe(
+      ["{", '  "title": "Rahasia Miliarder"', "}", ""].join("\n")
+    );
+    await expect(fileExists("clean-output.json")).resolves.toBe(false);
+  });
+
   it("accepts UTF-8 BOM at the start of input and schema files", async () => {
     await writeFixture("raw-output.txt", '\uFEFF{ "title": "Rahasia Miliarder" }');
     await writeFixture("schema.json", `\uFEFF${titleSchema()}`);

@@ -73,6 +73,7 @@ b94651f Move GovernanceOS policy under GitHub config
   - quote rusak: `FAILED`, `unescaped_quote` dengan suggested retry prompt
   - key schema diganti: `FAILED`, `schema_deviation`
 - Lima failure pattern sekarang juga punya test eksplisit di `tests/check.test.ts`.
+- `PHASE_0_VALIDATION.md` sudah ditambahkan sebagai catatan singkat batas dan hasil validasi sebelum promote.
 - Quality gate lokal tetap hijau setelah penambahan README dan examples.
 
 ## Yang Belum Selesai
