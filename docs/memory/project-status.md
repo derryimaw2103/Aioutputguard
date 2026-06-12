@@ -79,6 +79,8 @@ b94651f Move GovernanceOS policy under GitHub config
 - Hasil trial itu `PASSED` dan `cleaned: false` karena input sumber sudah bersih.
 - Dua artifact `data/title_tests/*.json` juga diuji read-only dan keduanya `PASSED`.
 - Artifact title test tersebut juga `cleaned: false`, yang menguatkan bahwa project asli lebih banyak mengeluarkan JSON bersih daripada JSON yang perlu cleaning.
+- Empat run observer tambahan dijalankan pada `briefing_2026-06-12.json`, `briefing_2026-06-11.json`, `title_test_2bJSoLWEcnY.json`, dan `title_test_oFh19sqr9yo.json`.
+- Semua run observer tambahan itu `PASSED` dan `cleaned: false`.
 
 ## Yang Belum Selesai
 
@@ -92,7 +94,7 @@ b94651f Move GovernanceOS policy under GitHub config
 
 Urutan kerja berikutnya:
 
-1. Jika perlu bukti tambahan, coba satu artifact lain yang lebih dekat ke output LLM mentah.
+1. Kalau mau bukti crash/failure handling, coba satu artifact yang sengaja rusak di lingkungan aman.
 2. Jika siap promosi, lanjutkan `experiment -> dev`.
 3. Setelah review dan semua gate hijau, lanjutkan `dev -> main`.
 

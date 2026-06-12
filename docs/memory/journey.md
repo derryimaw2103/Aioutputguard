@@ -232,3 +232,17 @@ experiment -> dev -> main
   - `cleaned: false`
   - report dan clean output berhasil dibuat
 - Ini menambah bukti bahwa tool aman dipakai di artifact project asli yang berbeda jenis namun tetap JSON object bersih.
+
+### Empat Run Observer Tambahan Berhasil
+
+- Artifact yang diuji:
+  - `data/news_briefing/briefing_2026-06-12.json`
+  - `data/news_briefing/briefing_2026-06-11.json`
+  - `data/title_tests/title_test_2bJSoLWEcnY.json`
+  - `data/title_tests/title_test_oFh19sqr9yo.json`
+- Semua dijalankan read-only, dengan `--no-fail`, dan output ditulis ke `scratch/`.
+- Hasil semua run:
+  - status `PASSED`
+  - `cleaned: false`
+  - report membantu memvalidasi bahwa input sumber memang sudah JSON bersih
+- Tidak ada false positive yang terlihat pada 4 run ini.
