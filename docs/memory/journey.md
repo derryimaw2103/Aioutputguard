@@ -202,3 +202,33 @@ experiment -> dev -> main
   - overwrite safety
   - real pipeline trial
   - known limitations Phase 0
+
+### Safe Dogfooding Protocol Disepakati
+
+- Trial di project asli akan dijalankan read-only terlebih dulu.
+- `--overwrite` ditunda sampai beberapa run awal terbukti aman.
+- `--no-fail` dipakai di run awal supaya observasi tidak memblokir pipeline.
+- Hasil guard dibandingkan dengan output lama sebelum pipeline diganti.
+
+### Trial Read-Only Project Asli Berhasil
+
+- Target file: `C:\botyoutube\YoutubeDerry-codex-review-repos-for-user-friendly-patches\data\news_briefing\briefing_2026-06-11.json`
+- Command dijalankan tanpa `--overwrite` dan dengan `--no-fail`.
+- Output ditulis ke file baru di `scratch/` milik repo ini.
+- Hasil:
+  - status `PASSED`
+  - `cleaned: false`
+  - report dan clean output berhasil dibuat
+- Ini menegaskan mode dogfooding read-only aman untuk project asli.
+
+### Dua Artifact Title Test Juga Berhasil
+
+- Target file:
+  - `data/title_tests/title_test_2bJSoLWEcnY.json`
+  - `data/title_tests/title_test_oFh19sqr9yo.json`
+- Keduanya diuji dengan schema title test yang sama, read-only, dan `--no-fail`.
+- Hasil:
+  - status `PASSED`
+  - `cleaned: false`
+  - report dan clean output berhasil dibuat
+- Ini menambah bukti bahwa tool aman dipakai di artifact project asli yang berbeda jenis namun tetap JSON object bersih.
