@@ -69,11 +69,12 @@ node dist/cli.js check --input raw-output.txt --schema schema.json --clean-outpu
 
 Urutan lanjut yang disarankan sudah dirinci di `implementation_plan.md`. Ringkasannya:
 
-1. Isi `examples/trial/raw-output.txt` dan `examples/trial/schema.json` dengan output AI nyata milik owner.
-2. Jalankan trial sesuai README di `examples/trial/`.
-3. Catat hasil trial di `docs/memory/journey.md`.
-4. Jika stabil, promosikan `experiment` ke `dev`.
-5. Setelah review dan CI hijau, promosikan `dev` ke `main`.
+1. Trial project asli dilakukan read-only terlebih dulu, tanpa `--overwrite`.
+2. Pakai `--no-fail` untuk 2-5 run awal supaya pipeline tidak langsung berhenti.
+3. Tulis output guard ke file baru dan bandingkan dengan output lama.
+4. Catat hasil trial di `docs/memory/journey.md`.
+5. Jika stabil, promosikan `experiment` ke `dev`.
+6. Setelah review dan CI hijau, promosikan `dev` ke `main`.
 
 Untuk pekerjaan besar berikutnya, mulai dari Milestone 1 di `implementation_plan.md`.
 

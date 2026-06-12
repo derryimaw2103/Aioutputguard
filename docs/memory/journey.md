@@ -202,3 +202,10 @@ experiment -> dev -> main
   - overwrite safety
   - real pipeline trial
   - known limitations Phase 0
+
+### Safe Dogfooding Protocol Disepakati
+
+- Trial di project asli akan dijalankan read-only terlebih dulu.
+- `--overwrite` ditunda sampai beberapa run awal terbukti aman.
+- `--no-fail` dipakai di run awal supaya observasi tidak memblokir pipeline.
+- Hasil guard dibandingkan dengan output lama sebelum pipeline diganti.
