@@ -55,6 +55,30 @@ b94651f Move GovernanceOS policy under GitHub config
 - Governance policy di `.github/governance/policy.yaml`.
 - Labeler dan Dependabot untuk membantu maintenance.
 - Project Memory di `docs/memory/`.
+- Semua workflow utama terakhir sudah hijau setelah `PAT_TOKEN` diperbarui.
+- GovernanceOS Gatekeeper sudah berhasil menjalankan install dan evaluation path dengan konfigurasi terbaru.
+- `implementation_plan.md` sudah diperbarui menjadi roadmap lanjutan Phase 0 yang mudah diikuti oleh junior engineer atau AI model yang lebih rendah.
+- README sekarang sudah berisi usage Phase 0, flag, exit code, branch flow, dan contoh command.
+- Folder `examples/article/` sekarang tersedia sebagai contoh input, schema, expected clean output, dan expected report.
+- Example CLI sudah diverifikasi jalan secara lokal.
+- Example failure untuk `schema_deviation` dan `truncated_output` sudah diverifikasi jalan secara lokal.
+- Folder `examples/trial/` sekarang tersedia sebagai kit untuk mencoba output AI nyata.
+- Trial kit sudah diuji dengan output yang valid dan menghasilkan `PASSED`.
+- Trial nyata pertama di project `YoutubeDerry-codex-review-repos-for-user-friendly-patches` berhasil pada `data/news_briefing/briefing_2026-06-11.json`.
+- Trial itu lolos tanpa cleaning karena output sumber sudah berupa JSON bersih.
+- Lima failure pattern yang diminta owner sudah diuji:
+  - basa-basi sebelum JSON: `PASSED`, `cleaned: true`
+  - markdown code block: `PASSED`, `cleaned: true`
+  - JSON terpotong: `FAILED`, `truncated_output`
+  - quote rusak: `FAILED`, `unescaped_quote` dengan suggested retry prompt
+  - key schema diganti: `FAILED`, `schema_deviation`
+- Lima failure pattern sekarang juga punya test eksplisit di `tests/check.test.ts`.
+- `PHASE_0_VALIDATION.md` sudah ditambahkan sebagai catatan singkat batas dan hasil validasi sebelum promote.
+- Quality gate lokal tetap hijau setelah penambahan README dan examples.
+- Trial read-only terhadap `C:\botyoutube\YoutubeDerry-codex-review-repos-for-user-friendly-patches\data\news_briefing\briefing_2026-06-11.json` berhasil dengan `--no-fail`.
+- Hasil trial itu `PASSED` dan `cleaned: false` karena input sumber sudah bersih.
+- Dua artifact `data/title_tests/*.json` juga diuji read-only dan keduanya `PASSED`.
+- Artifact title test tersebut juga `cleaned: false`, yang menguatkan bahwa project asli lebih banyak mengeluarkan JSON bersih daripada JSON yang perlu cleaning.
 
 ## Yang Belum Selesai
 
@@ -63,6 +87,14 @@ b94651f Move GovernanceOS policy under GitHub config
 - Belum dipakai di satu pipeline AI automation milik owner.
 - Belum ada examples folder untuk sample raw output dan schema.
 - Belum ada release/tag npm.
+
+## Fokus Berikutnya
+
+Urutan kerja berikutnya:
+
+1. Jika perlu bukti tambahan, coba satu artifact lain yang lebih dekat ke output LLM mentah.
+2. Jika siap promosi, lanjutkan `experiment -> dev`.
+3. Setelah review dan semua gate hijau, lanjutkan `dev -> main`.
 
 ## File Lokal Yang Sengaja Tidak Di-commit
 

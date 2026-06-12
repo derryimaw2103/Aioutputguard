@@ -174,3 +174,67 @@ Alternatif: Tetap gagal keras ketika PAT salah. Ditolak untuk fase bootstrap kar
 Rollback: Set `GOVERNANCE_REQUIRED=true` setelah PAT dikonfigurasi dengan akses read ke `derryimaw2103/GovernanceOSUNI`.
 
 Status: Aktif.
+
+## D-011: GovernanceOS Gatekeeper Terverifikasi Setelah PAT Diperbarui
+
+Tanggal: 2026-06-12
+
+Keputusan: Setelah `PAT_TOKEN` diperbarui, GovernanceOS Gatekeeper dianggap terverifikasi dan dapat dipakai sebagai pengawas repo yang aktif. Status optional hanya dipertahankan sebagai mekanisme fallback teknis jika secret rusak lagi.
+
+Alasan: Owner mengonfirmasi semua workflow sudah berhasil. Artinya jalur install dan evaluation GovernanceOS sudah valid untuk repo ini.
+
+Trade-off: GovernanceOS tetap bergantung pada secret eksternal, jadi jika token kedaluwarsa workflow bisa kembali perlu fallback.
+
+Alternatif: Menyimpan GovernanceOS sebagai warning-only selamanya. Ditolak karena sekarang sudah terbukti bisa berjalan.
+
+Rollback: Jika secret rusak lagi, kembali ke mode optional atau set `GOVERNANCE_REQUIRED=false` sementara.
+
+Status: Aktif.
+
+## D-012: Roadmap Lanjutan Phase 0 Disusun Sebagai Milestone Sederhana
+
+Tanggal: 2026-06-12
+
+Keputusan: `implementation_plan.md` dipakai sebagai roadmap lanjutan Phase 0 dengan milestone sederhana: README, examples, validasi PRD, trial pipeline nyata, promosi `experiment -> dev`, lalu promosi `dev -> main`.
+
+Alasan: Owner meminta plan high level yang bisa dipahami junior engineer atau AI model yang lebih rendah. Rencana perlu eksplisit agar project bisa diteruskan tanpa bergantung pada konteks chat.
+
+Trade-off: Dokumen menjadi lebih panjang, tetapi lebih mudah diikuti oleh penerus project.
+
+Alternatif: Menyimpan plan hanya dalam chat. Ditolak karena owner sudah meminta memory dokumentasi repo selalu diperbarui.
+
+Rollback: Jika prioritas berubah, update `implementation_plan.md` dan catat perubahan baru di decision log.
+
+Status: Aktif.
+
+## D-013: README Dan Examples Menjadi Bagian Wajib Sebelum Promosi Ke Dev
+
+Tanggal: 2026-06-12
+
+Keputusan: README usage dan folder `examples/` diperlakukan sebagai bagian wajib dari kesiapan Phase 0 sebelum promosi `experiment` ke `dev`.
+
+Alasan: Tool CLI tanpa contoh pakai akan sulit diteruskan oleh engineer lain atau AI model yang lebih rendah, meskipun implementasi kodenya sudah benar.
+
+Trade-off: Ada sedikit pekerjaan dokumentasi tambahan, tetapi onboarding dan verifikasi manual menjadi jauh lebih mudah.
+
+Alternatif: Menunda dokumentasi sampai setelah code stabil penuh. Ditolak karena owner sudah menekankan pentingnya memory dan keberlanjutan project.
+
+Rollback: Jika struktur examples perlu diubah nanti, update README dan memory tanpa mengubah keputusan bahwa contoh penggunaan tetap wajib ada.
+
+Status: Aktif.
+
+## D-014: Trial Kit Ditambahkan Untuk Output AI Nyata
+
+Tanggal: 2026-06-12
+
+Keputusan: Folder `examples/trial/` ditambahkan sebagai trial kit standar untuk menaruh raw output AI nyata dan schema yang sesuai sebelum menjalankan validasi.
+
+Alasan: Owner ingin langkah berikutnya dikerjakan. Trial kit membuat proses itu jelas, mudah diulang, dan tidak perlu membuat file dari nol tiap kali.
+
+Trade-off: Ada sedikit tambahan file contoh di repo, tetapi helper ini membuat trial nyata jauh lebih cepat dilakukan.
+
+Alternatif: Menunggu pipeline aktif dulu tanpa template lokal. Ditolak karena akan memperlambat validasi manual.
+
+Rollback: Jika trial kit tidak diperlukan lagi, folder bisa dipindah atau dihapus setelah workflow trial stabil.
+
+Status: Aktif.

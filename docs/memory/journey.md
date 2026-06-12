@@ -81,3 +81,154 @@ experiment -> dev -> main
 - CodeQL dibuat optional dan hanya berjalan ketika repo tidak private.
 - Setelah itu GovernanceOS masih gagal karena `PAT_TOKEN` tidak punya akses clone ke repo private `GovernanceOSUNI`.
 - GovernanceOS workflow dibuat optional secara default: install/evaluate di-skip dengan warning jika PAT belum benar, dan bisa dibuat wajib dengan repository variable `GOVERNANCE_REQUIRED=true`.
+
+### GovernanceOS Dan Security Berhasil
+
+- Owner memperbarui `PAT_TOKEN`.
+- Semua workflow utama pada commit terbaru berhasil:
+  - `Node CI (Quality Gate)`
+  - `Security`
+  - `GovernanceOS Gatekeeper`
+- Ini menandakan jalur pengawasan repo sudah bisa dipakai tanpa mengganggu alur Phase 0.
+
+### Implementation Plan Lanjutan Dibuat
+
+- Owner meminta rencana selanjutnya yang high level dan mudah dipahami oleh junior engineer atau AI model yang lebih rendah.
+- `implementation_plan.md` diperbarui dari rencana bootstrap awal menjadi roadmap lanjutan Phase 0.
+- Urutan kerja disepakati secara praktis:
+  - dokumentasi README.
+  - examples.
+  - validasi terhadap PRD.
+  - trial pada pipeline nyata.
+  - promosi `experiment -> dev`.
+  - promosi `dev -> main`.
+- Scope tetap Phase 0 dan tidak memasukkan fitur Phase 1.
+
+### README Dan Examples Phase 0 Ditambahkan
+
+- README diperluas agar bisa menjadi panduan pertama tanpa harus membaca chat.
+- README sekarang menjelaskan:
+  - tujuan tool.
+  - scope dan non-goal Phase 0.
+  - instalasi.
+  - command utama.
+  - arti flag.
+  - exit code.
+  - contoh command.
+- Folder `examples/article/` ditambahkan.
+- Example tersebut menunjukkan kasus raw AI output dengan preamble dan markdown code block yang dibersihkan menjadi JSON valid.
+
+### Example Dan Quality Gate Diverifikasi
+
+- Command example di README dijalankan secara lokal dan menghasilkan status `PASSED`.
+- Clean output dan report yang dihasilkan sesuai dengan sample expected.
+- File hasil generate sementara tidak disimpan ke repo dan diabaikan lewat `.gitignore`.
+- Quality gate lokal yang diverifikasi setelah perubahan ini:
+  - `npm run format:check`
+  - `npm run lint`
+  - `npm test`
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm pack --dry-run`
+
+### Failure Case Dicoba Secara Manual
+
+- Owner meminta simulasi contoh gagal agar perilaku tool lebih mudah dipahami.
+- Dua skenario dijalankan:
+  - `schema_deviation`
+  - `truncated_output`
+- Hasil yang terverifikasi:
+  - terminal mengembalikan status `FAILED`
+  - report JSON tetap ditulis
+  - clean output tidak ditulis saat validasi gagal
+  - issue dan retry guidance tampil sesuai jenis kegagalan
+
+### Trial Kit Disiapkan
+
+- Folder `examples/trial/` ditambahkan sebagai tempat menaruh raw output AI nyata dan schema yang sesuai.
+- Tujuannya supaya trial berikutnya bisa dilakukan tanpa membuat struktur file dari nol lagi.
+- README kecil di folder itu menjelaskan command yang perlu dijalankan saat data nyata sudah siap.
+
+### Trial Kit Diuji Dengan Input Valid
+
+- File aktif `examples/trial/raw-output.txt` dan `examples/trial/schema.json` diisi dengan contoh output yang sudah lolos di `examples/article/`.
+- Command trial dijalankan ulang dan hasilnya `PASSED`.
+- Report menunjukkan cleaning actions, parser metadata, dan schema metadata sesuai perilaku yang diharapkan.
+
+### Trial Nyata Di Project Lain Berhasil
+
+- Target project nyata yang diberikan owner adalah `C:\botyoutube\YoutubeDerry-codex-review-repos-for-user-friendly-patches`.
+- Artefak yang diuji: `data/news_briefing/briefing_2026-06-11.json`.
+- Schema sementara disusun mengikuti struktur output briefing harian.
+- Hasil trial:
+  - status `PASSED`
+  - `cleaned: false` karena input sudah JSON bersih
+  - file clean output dan report berhasil dibuat
+- Ini membuktikan tool cocok dipakai di pipeline project nyata tanpa perlu menambah cleaning ekstra kalau sumber output sudah rapi.
+
+### Lima Failure Pattern Divalidasi
+
+- Lima pattern yang diminta owner sudah diuji secara lokal.
+- Hasilnya:
+  - basa-basi sebelum JSON: `PASSED`, `cleaned: true`
+  - markdown code block: `PASSED`, `cleaned: true`
+  - JSON terpotong: `FAILED`, `truncated_output`
+  - quote rusak: `FAILED`, `unescaped_quote`
+  - key schema diganti: `FAILED`, `schema_deviation`
+- Untuk kasus `unescaped_quote`, suggested retry prompt ikut muncul seperti yang diharapkan.
+- Ini menutup validasi core behavior Phase 0 dengan contoh sukses dan gagal yang nyata.
+
+### Lima Failure Pattern Dijadikan Test Eksplisit
+
+- `tests/check.test.ts` diperluas agar lima pattern tadi punya coverage otomatis:
+  - chatty preamble
+  - markdown code block
+  - truncated JSON
+  - unescaped quote
+  - schema deviation
+- Test suite sekarang mengunci perilaku:
+  - pass/fail status
+  - cleaned flag
+  - report writing
+  - exit code
+  - suggested retry prompt untuk quote rusak dan schema deviation
+
+### PHASE 0 Validation Note Ditambahkan
+
+- File ringkas `PHASE_0_VALIDATION.md` ditambahkan sebagai penanda sebelum promote.
+- Isinya merangkum:
+  - 5 failure pattern
+  - exit code behavior
+  - overwrite safety
+  - real pipeline trial
+  - known limitations Phase 0
+
+### Safe Dogfooding Protocol Disepakati
+
+- Trial di project asli akan dijalankan read-only terlebih dulu.
+- `--overwrite` ditunda sampai beberapa run awal terbukti aman.
+- `--no-fail` dipakai di run awal supaya observasi tidak memblokir pipeline.
+- Hasil guard dibandingkan dengan output lama sebelum pipeline diganti.
+
+### Trial Read-Only Project Asli Berhasil
+
+- Target file: `C:\botyoutube\YoutubeDerry-codex-review-repos-for-user-friendly-patches\data\news_briefing\briefing_2026-06-11.json`
+- Command dijalankan tanpa `--overwrite` dan dengan `--no-fail`.
+- Output ditulis ke file baru di `scratch/` milik repo ini.
+- Hasil:
+  - status `PASSED`
+  - `cleaned: false`
+  - report dan clean output berhasil dibuat
+- Ini menegaskan mode dogfooding read-only aman untuk project asli.
+
+### Dua Artifact Title Test Juga Berhasil
+
+- Target file:
+  - `data/title_tests/title_test_2bJSoLWEcnY.json`
+  - `data/title_tests/title_test_oFh19sqr9yo.json`
+- Keduanya diuji dengan schema title test yang sama, read-only, dan `--no-fail`.
+- Hasil:
+  - status `PASSED`
+  - `cleaned: false`
+  - report dan clean output berhasil dibuat
+- Ini menambah bukti bahwa tool aman dipakai di artifact project asli yang berbeda jenis namun tetap JSON object bersih.
