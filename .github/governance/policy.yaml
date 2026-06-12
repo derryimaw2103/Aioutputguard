@@ -1,0 +1,7 @@
+minimum_score: 70
+critical:
+  max_allowed: 0
+high:
+  max_allowed: 5
+waiver:
+  allow: true
