@@ -209,3 +209,14 @@ experiment -> dev -> main
 - `--overwrite` ditunda sampai beberapa run awal terbukti aman.
 - `--no-fail` dipakai di run awal supaya observasi tidak memblokir pipeline.
 - Hasil guard dibandingkan dengan output lama sebelum pipeline diganti.
+
+### Trial Read-Only Project Asli Berhasil
+
+- Target file: `C:\botyoutube\YoutubeDerry-codex-review-repos-for-user-friendly-patches\data\news_briefing\briefing_2026-06-11.json`
+- Command dijalankan tanpa `--overwrite` dan dengan `--no-fail`.
+- Output ditulis ke file baru di `scratch/` milik repo ini.
+- Hasil:
+  - status `PASSED`
+  - `cleaned: false`
+  - report dan clean output berhasil dibuat
+- Ini menegaskan mode dogfooding read-only aman untuk project asli.

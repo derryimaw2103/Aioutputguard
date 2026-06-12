@@ -75,6 +75,8 @@ b94651f Move GovernanceOS policy under GitHub config
 - Lima failure pattern sekarang juga punya test eksplisit di `tests/check.test.ts`.
 - `PHASE_0_VALIDATION.md` sudah ditambahkan sebagai catatan singkat batas dan hasil validasi sebelum promote.
 - Quality gate lokal tetap hijau setelah penambahan README dan examples.
+- Trial read-only terhadap `C:\botyoutube\YoutubeDerry-codex-review-repos-for-user-friendly-patches\data\news_briefing\briefing_2026-06-11.json` berhasil dengan `--no-fail`.
+- Hasil trial itu `PASSED` dan `cleaned: false` karena input sumber sudah bersih.
 
 ## Yang Belum Selesai
 
