@@ -1,0 +1,11 @@
+Tentu, berikut hasil yang sudah dirapikan:
+
+```json
+{
+  "title": "Rahasia Miliarder",
+  "category": "business",
+  "tags": ["mindset", "wealth", "habits"]
+}
+```
+
+Semoga membantu.

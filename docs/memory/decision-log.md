@@ -206,3 +206,19 @@ Alternatif: Menyimpan plan hanya dalam chat. Ditolak karena owner sudah meminta 
 Rollback: Jika prioritas berubah, update `implementation_plan.md` dan catat perubahan baru di decision log.
 
 Status: Aktif.
+
+## D-013: README Dan Examples Menjadi Bagian Wajib Sebelum Promosi Ke Dev
+
+Tanggal: 2026-06-12
+
+Keputusan: README usage dan folder `examples/` diperlakukan sebagai bagian wajib dari kesiapan Phase 0 sebelum promosi `experiment` ke `dev`.
+
+Alasan: Tool CLI tanpa contoh pakai akan sulit diteruskan oleh engineer lain atau AI model yang lebih rendah, meskipun implementasi kodenya sudah benar.
+
+Trade-off: Ada sedikit pekerjaan dokumentasi tambahan, tetapi onboarding dan verifikasi manual menjadi jauh lebih mudah.
+
+Alternatif: Menunda dokumentasi sampai setelah code stabil penuh. Ditolak karena owner sudah menekankan pentingnya memory dan keberlanjutan project.
+
+Rollback: Jika struktur examples perlu diubah nanti, update README dan memory tanpa mengubah keputusan bahwa contoh penggunaan tetap wajib ada.
+
+Status: Aktif.

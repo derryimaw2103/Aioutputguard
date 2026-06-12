@@ -58,6 +58,10 @@ b94651f Move GovernanceOS policy under GitHub config
 - Semua workflow utama terakhir sudah hijau setelah `PAT_TOKEN` diperbarui.
 - GovernanceOS Gatekeeper sudah berhasil menjalankan install dan evaluation path dengan konfigurasi terbaru.
 - `implementation_plan.md` sudah diperbarui menjadi roadmap lanjutan Phase 0 yang mudah diikuti oleh junior engineer atau AI model yang lebih rendah.
+- README sekarang sudah berisi usage Phase 0, flag, exit code, branch flow, dan contoh command.
+- Folder `examples/article/` sekarang tersedia sebagai contoh input, schema, expected clean output, dan expected report.
+- Example CLI sudah diverifikasi jalan secara lokal.
+- Quality gate lokal tetap hijau setelah penambahan README dan examples.
 
 ## Yang Belum Selesai
 
@@ -71,12 +75,9 @@ b94651f Move GovernanceOS policy under GitHub config
 
 Urutan kerja berikutnya:
 
-1. Update `README.md` dengan usage CLI Phase 0.
-2. Tambahkan folder `examples/`.
-3. Jalankan CLI terhadap examples.
-4. Coba CLI pada satu pipeline AI automation nyata milik owner.
-5. Jika stabil, promosikan dari `experiment` ke `dev`.
-6. Setelah review dan semua gate hijau, promosikan dari `dev` ke `main`.
+1. Coba CLI pada satu pipeline AI automation nyata milik owner.
+2. Jika stabil, promosikan dari `experiment` ke `dev`.
+3. Setelah review dan semua gate hijau, promosikan dari `dev` ke `main`.
 
 ## File Lokal Yang Sengaja Tidak Di-commit
 

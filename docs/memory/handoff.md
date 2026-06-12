@@ -69,12 +69,10 @@ node dist/cli.js check --input raw-output.txt --schema schema.json --clean-outpu
 
 Urutan lanjut yang disarankan sudah dirinci di `implementation_plan.md`. Ringkasannya:
 
-1. Rapikan README usage untuk CLI Phase 0.
-2. Tambahkan `examples/` berisi raw output, schema, clean output, dan report sample.
-3. Coba CLI di pipeline AI automation milik owner.
-4. Catat hasil pemakaian pertama di `docs/memory/journey.md`.
-5. Jika stabil, promosikan `experiment` ke `dev`.
-6. Setelah review dan CI hijau, promosikan `dev` ke `main`.
+1. Coba CLI di pipeline AI automation milik owner.
+2. Catat hasil pemakaian pertama di `docs/memory/journey.md`.
+3. Jika stabil, promosikan `experiment` ke `dev`.
+4. Setelah review dan CI hijau, promosikan `dev` ke `main`.
 
 Untuk pekerjaan besar berikutnya, mulai dari Milestone 1 di `implementation_plan.md`.
 

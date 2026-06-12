@@ -103,3 +103,30 @@ experiment -> dev -> main
   - promosi `experiment -> dev`.
   - promosi `dev -> main`.
 - Scope tetap Phase 0 dan tidak memasukkan fitur Phase 1.
+
+### README Dan Examples Phase 0 Ditambahkan
+
+- README diperluas agar bisa menjadi panduan pertama tanpa harus membaca chat.
+- README sekarang menjelaskan:
+  - tujuan tool.
+  - scope dan non-goal Phase 0.
+  - instalasi.
+  - command utama.
+  - arti flag.
+  - exit code.
+  - contoh command.
+- Folder `examples/article/` ditambahkan.
+- Example tersebut menunjukkan kasus raw AI output dengan preamble dan markdown code block yang dibersihkan menjadi JSON valid.
+
+### Example Dan Quality Gate Diverifikasi
+
+- Command example di README dijalankan secara lokal dan menghasilkan status `PASSED`.
+- Clean output dan report yang dihasilkan sesuai dengan sample expected.
+- File hasil generate sementara tidak disimpan ke repo dan diabaikan lewat `.gitignore`.
+- Quality gate lokal yang diverifikasi setelah perubahan ini:
+  - `npm run format:check`
+  - `npm run lint`
+  - `npm test`
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm pack --dry-run`
