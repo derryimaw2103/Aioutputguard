@@ -174,3 +174,35 @@ Alternatif: Tetap gagal keras ketika PAT salah. Ditolak untuk fase bootstrap kar
 Rollback: Set `GOVERNANCE_REQUIRED=true` setelah PAT dikonfigurasi dengan akses read ke `derryimaw2103/GovernanceOSUNI`.
 
 Status: Aktif.
+
+## D-011: GovernanceOS Gatekeeper Terverifikasi Setelah PAT Diperbarui
+
+Tanggal: 2026-06-12
+
+Keputusan: Setelah `PAT_TOKEN` diperbarui, GovernanceOS Gatekeeper dianggap terverifikasi dan dapat dipakai sebagai pengawas repo yang aktif. Status optional hanya dipertahankan sebagai mekanisme fallback teknis jika secret rusak lagi.
+
+Alasan: Owner mengonfirmasi semua workflow sudah berhasil. Artinya jalur install dan evaluation GovernanceOS sudah valid untuk repo ini.
+
+Trade-off: GovernanceOS tetap bergantung pada secret eksternal, jadi jika token kedaluwarsa workflow bisa kembali perlu fallback.
+
+Alternatif: Menyimpan GovernanceOS sebagai warning-only selamanya. Ditolak karena sekarang sudah terbukti bisa berjalan.
+
+Rollback: Jika secret rusak lagi, kembali ke mode optional atau set `GOVERNANCE_REQUIRED=false` sementara.
+
+Status: Aktif.
+
+## D-012: Roadmap Lanjutan Phase 0 Disusun Sebagai Milestone Sederhana
+
+Tanggal: 2026-06-12
+
+Keputusan: `implementation_plan.md` dipakai sebagai roadmap lanjutan Phase 0 dengan milestone sederhana: README, examples, validasi PRD, trial pipeline nyata, promosi `experiment -> dev`, lalu promosi `dev -> main`.
+
+Alasan: Owner meminta plan high level yang bisa dipahami junior engineer atau AI model yang lebih rendah. Rencana perlu eksplisit agar project bisa diteruskan tanpa bergantung pada konteks chat.
+
+Trade-off: Dokumen menjadi lebih panjang, tetapi lebih mudah diikuti oleh penerus project.
+
+Alternatif: Menyimpan plan hanya dalam chat. Ditolak karena owner sudah meminta memory dokumentasi repo selalu diperbarui.
+
+Rollback: Jika prioritas berubah, update `implementation_plan.md` dan catat perubahan baru di decision log.
+
+Status: Aktif.

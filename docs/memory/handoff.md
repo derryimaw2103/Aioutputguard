@@ -67,7 +67,7 @@ node dist/cli.js check --input raw-output.txt --schema schema.json --clean-outpu
 
 ## Next Step Yang Masuk Akal
 
-Urutan lanjut yang disarankan:
+Urutan lanjut yang disarankan sudah dirinci di `implementation_plan.md`. Ringkasannya:
 
 1. Rapikan README usage untuk CLI Phase 0.
 2. Tambahkan `examples/` berisi raw output, schema, clean output, dan report sample.
@@ -75,6 +75,8 @@ Urutan lanjut yang disarankan:
 4. Catat hasil pemakaian pertama di `docs/memory/journey.md`.
 5. Jika stabil, promosikan `experiment` ke `dev`.
 6. Setelah review dan CI hijau, promosikan `dev` ke `main`.
+
+Untuk pekerjaan besar berikutnya, mulai dari Milestone 1 di `implementation_plan.md`.
 
 ## Jika Terjadi Masalah
 
@@ -98,6 +100,12 @@ Jika Security workflow gagal:
 - Cek `npm audit --audit-level=high` terlebih dahulu.
 - Dependency Review GitHub tidak dipakai saat ini karena dapat gagal jika Dependency Graph belum aktif atau belum tersedia.
 - CodeQL dibuat optional untuk repo private atau repo tanpa dukungan GitHub Advanced Security.
+
+Jika semua workflow sudah hijau:
+
+- Anggap konfigurasi CI/security/governance sudah valid pada commit terakhir.
+- Jika owner ingin governance menjadi hard gate permanen, set `GOVERNANCE_REQUIRED=true`.
+- Setelah itu, promosi `experiment -> dev` dan `dev -> main` lebih aman dilakukan.
 
 Jika branch berantakan:
 

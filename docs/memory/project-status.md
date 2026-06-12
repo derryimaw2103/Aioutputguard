@@ -55,6 +55,9 @@ b94651f Move GovernanceOS policy under GitHub config
 - Governance policy di `.github/governance/policy.yaml`.
 - Labeler dan Dependabot untuk membantu maintenance.
 - Project Memory di `docs/memory/`.
+- Semua workflow utama terakhir sudah hijau setelah `PAT_TOKEN` diperbarui.
+- GovernanceOS Gatekeeper sudah berhasil menjalankan install dan evaluation path dengan konfigurasi terbaru.
+- `implementation_plan.md` sudah diperbarui menjadi roadmap lanjutan Phase 0 yang mudah diikuti oleh junior engineer atau AI model yang lebih rendah.
 
 ## Yang Belum Selesai
 
@@ -63,6 +66,17 @@ b94651f Move GovernanceOS policy under GitHub config
 - Belum dipakai di satu pipeline AI automation milik owner.
 - Belum ada examples folder untuk sample raw output dan schema.
 - Belum ada release/tag npm.
+
+## Fokus Berikutnya
+
+Urutan kerja berikutnya:
+
+1. Update `README.md` dengan usage CLI Phase 0.
+2. Tambahkan folder `examples/`.
+3. Jalankan CLI terhadap examples.
+4. Coba CLI pada satu pipeline AI automation nyata milik owner.
+5. Jika stabil, promosikan dari `experiment` ke `dev`.
+6. Setelah review dan semua gate hijau, promosikan dari `dev` ke `main`.
 
 ## File Lokal Yang Sengaja Tidak Di-commit
 
