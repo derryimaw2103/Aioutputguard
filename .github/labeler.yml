@@ -26,4 +26,4 @@ configuration:
           - "tsconfig.json"
           - "eslint.config.js"
           - "vitest.config.ts"
-          - "governance.yaml"
+          - ".github/governance/**/*"

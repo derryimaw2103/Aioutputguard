@@ -93,4 +93,4 @@ jobs:
             EXTRA_FLAGS="$EXTRA_FLAGS --telegram"
           fi
 
-          governanceos evaluate report.sarif --project "AI Output Guard" $EXTRA_FLAGS
+          governanceos evaluate report.sarif --policy .github/governance/policy.yaml --project "AI Output Guard" $EXTRA_FLAGS
