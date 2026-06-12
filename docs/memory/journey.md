@@ -220,3 +220,15 @@ experiment -> dev -> main
   - `cleaned: false`
   - report dan clean output berhasil dibuat
 - Ini menegaskan mode dogfooding read-only aman untuk project asli.
+
+### Dua Artifact Title Test Juga Berhasil
+
+- Target file:
+  - `data/title_tests/title_test_2bJSoLWEcnY.json`
+  - `data/title_tests/title_test_oFh19sqr9yo.json`
+- Keduanya diuji dengan schema title test yang sama, read-only, dan `--no-fail`.
+- Hasil:
+  - status `PASSED`
+  - `cleaned: false`
+  - report dan clean output berhasil dibuat
+- Ini menambah bukti bahwa tool aman dipakai di artifact project asli yang berbeda jenis namun tetap JSON object bersih.

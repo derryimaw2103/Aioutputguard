@@ -77,6 +77,8 @@ b94651f Move GovernanceOS policy under GitHub config
 - Quality gate lokal tetap hijau setelah penambahan README dan examples.
 - Trial read-only terhadap `C:\botyoutube\YoutubeDerry-codex-review-repos-for-user-friendly-patches\data\news_briefing\briefing_2026-06-11.json` berhasil dengan `--no-fail`.
 - Hasil trial itu `PASSED` dan `cleaned: false` karena input sumber sudah bersih.
+- Dua artifact `data/title_tests/*.json` juga diuji read-only dan keduanya `PASSED`.
+- Artifact title test tersebut juga `cleaned: false`, yang menguatkan bahwa project asli lebih banyak mengeluarkan JSON bersih daripada JSON yang perlu cleaning.
 
 ## Yang Belum Selesai
 
@@ -90,7 +92,7 @@ b94651f Move GovernanceOS policy under GitHub config
 
 Urutan kerja berikutnya:
 
-1. Kalau perlu, coba artefak lain dari project nyata itu, misalnya title test JSON.
+1. Jika perlu bukti tambahan, coba satu artifact lain yang lebih dekat ke output LLM mentah.
 2. Jika siap promosi, lanjutkan `experiment -> dev`.
 3. Setelah review dan semua gate hijau, lanjutkan `dev -> main`.
 
