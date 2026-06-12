@@ -158,3 +158,19 @@ Alternatif: Menambahkan file Python dependency dummy. Ditolak karena akan mengot
 Rollback: Aktifkan kembali pip cache jika nanti repo memang punya dependency Python yang sah.
 
 Status: Aktif.
+
+## D-010: GovernanceOS Gatekeeper Optional Sampai PAT Valid
+
+Tanggal: 2026-06-12
+
+Keputusan: GovernanceOS Gatekeeper tidak memblokir PR jika `PAT_TOKEN` belum tersedia atau belum punya akses ke repo private `GovernanceOSUNI`. Workflow memberi warning dan melewati install/evaluation. Jika owner ingin GovernanceOS wajib, set repository variable `GOVERNANCE_REQUIRED=true`.
+
+Alasan: Log GitHub Actions menunjukkan `PAT_TOKEN` terbaca tetapi clone `GovernanceOSUNI` gagal dengan 403. Kondisi ini adalah masalah permission secret, bukan kegagalan produk AI Output Guard. Membiarkan workflow merah akan menghambat PR Phase 0 walaupun core CI dan security audit sudah hijau.
+
+Trade-off: GovernanceOS belum menjadi hard gate sampai PAT benar. Namun sinyal warning tetap terlihat, dan hard gate bisa diaktifkan tanpa mengubah kode.
+
+Alternatif: Tetap gagal keras ketika PAT salah. Ditolak untuk fase bootstrap karena akan memblokir seluruh PR akibat konfigurasi eksternal.
+
+Rollback: Set `GOVERNANCE_REQUIRED=true` setelah PAT dikonfigurasi dengan akses read ke `derryimaw2103/GovernanceOSUNI`.
+
+Status: Aktif.

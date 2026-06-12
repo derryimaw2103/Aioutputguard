@@ -79,3 +79,5 @@ experiment -> dev -> main
 - Owner juga melaporkan `Dependency Review` gagal dan CodeQL tidak bisa dipakai pada repo private.
 - Security workflow diganti ke `npm audit --audit-level=high` sebagai pemeriksaan dependency yang stabil untuk repo ini.
 - CodeQL dibuat optional dan hanya berjalan ketika repo tidak private.
+- Setelah itu GovernanceOS masih gagal karena `PAT_TOKEN` tidak punya akses clone ke repo private `GovernanceOSUNI`.
+- GovernanceOS workflow dibuat optional secara default: install/evaluate di-skip dengan warning jika PAT belum benar, dan bisa dibuat wajib dengan repository variable `GOVERNANCE_REQUIRED=true`.

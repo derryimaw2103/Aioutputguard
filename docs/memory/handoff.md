@@ -87,9 +87,11 @@ Jika test gagal:
 Jika GovernanceOS gagal:
 
 - Pastikan `PAT_TOKEN` tersedia di GitHub secrets.
+- Pastikan `PAT_TOKEN` punya akses read ke repo private `derryimaw2103/GovernanceOSUNI`.
 - Pastikan `.github/governance/policy.yaml` valid.
 - Pastikan `npm run lint:sarif` menghasilkan `report.sarif`.
 - Jika gagal di `setup-python`, jangan aktifkan `cache: pip` kecuali repo punya file dependency Python seperti `requirements.txt` atau `pyproject.toml`.
+- GovernanceOS dibuat optional secara default. Jika ingin GovernanceOS wajib memblokir PR ketika token salah atau install gagal, set repository variable `GOVERNANCE_REQUIRED=true`.
 
 Jika Security workflow gagal:
 
