@@ -66,6 +66,14 @@ b94651f Move GovernanceOS policy under GitHub config
 - Trial kit sudah diuji dengan output yang valid dan menghasilkan `PASSED`.
 - Trial nyata pertama di project `YoutubeDerry-codex-review-repos-for-user-friendly-patches` berhasil pada `data/news_briefing/briefing_2026-06-11.json`.
 - Trial itu lolos tanpa cleaning karena output sumber sudah berupa JSON bersih.
+- Lima failure pattern yang diminta owner sudah diuji:
+  - basa-basi sebelum JSON: `PASSED`, `cleaned: true`
+  - markdown code block: `PASSED`, `cleaned: true`
+  - JSON terpotong: `FAILED`, `truncated_output`
+  - quote rusak: `FAILED`, `unescaped_quote` dengan suggested retry prompt
+  - key schema diganti: `FAILED`, `schema_deviation`
+- Lima failure pattern sekarang juga punya test eksplisit di `tests/check.test.ts`.
+- `PHASE_0_VALIDATION.md` sudah ditambahkan sebagai catatan singkat batas dan hasil validasi sebelum promote.
 - Quality gate lokal tetap hijau setelah penambahan README dan examples.
 
 ## Yang Belum Selesai
@@ -80,10 +88,9 @@ b94651f Move GovernanceOS policy under GitHub config
 
 Urutan kerja berikutnya:
 
-1. Coba trial berikutnya dengan artefak lain dari project nyata itu, misalnya title test JSON.
-2. Catat hasil trial di `docs/memory/journey.md`.
-3. Jika stabil, promosikan dari `experiment` ke `dev`.
-4. Setelah review dan semua gate hijau, promosikan dari `dev` ke `main`.
+1. Kalau perlu, coba artefak lain dari project nyata itu, misalnya title test JSON.
+2. Jika siap promosi, lanjutkan `experiment -> dev`.
+3. Setelah review dan semua gate hijau, lanjutkan `dev -> main`.
 
 ## File Lokal Yang Sengaja Tidak Di-commit
 

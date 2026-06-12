@@ -165,3 +165,40 @@ experiment -> dev -> main
   - `cleaned: false` karena input sudah JSON bersih
   - file clean output dan report berhasil dibuat
 - Ini membuktikan tool cocok dipakai di pipeline project nyata tanpa perlu menambah cleaning ekstra kalau sumber output sudah rapi.
+
+### Lima Failure Pattern Divalidasi
+
+- Lima pattern yang diminta owner sudah diuji secara lokal.
+- Hasilnya:
+  - basa-basi sebelum JSON: `PASSED`, `cleaned: true`
+  - markdown code block: `PASSED`, `cleaned: true`
+  - JSON terpotong: `FAILED`, `truncated_output`
+  - quote rusak: `FAILED`, `unescaped_quote`
+  - key schema diganti: `FAILED`, `schema_deviation`
+- Untuk kasus `unescaped_quote`, suggested retry prompt ikut muncul seperti yang diharapkan.
+- Ini menutup validasi core behavior Phase 0 dengan contoh sukses dan gagal yang nyata.
+
+### Lima Failure Pattern Dijadikan Test Eksplisit
+
+- `tests/check.test.ts` diperluas agar lima pattern tadi punya coverage otomatis:
+  - chatty preamble
+  - markdown code block
+  - truncated JSON
+  - unescaped quote
+  - schema deviation
+- Test suite sekarang mengunci perilaku:
+  - pass/fail status
+  - cleaned flag
+  - report writing
+  - exit code
+  - suggested retry prompt untuk quote rusak dan schema deviation
+
+### PHASE 0 Validation Note Ditambahkan
+
+- File ringkas `PHASE_0_VALIDATION.md` ditambahkan sebagai penanda sebelum promote.
+- Isinya merangkum:
+  - 5 failure pattern
+  - exit code behavior
+  - overwrite safety
+  - real pipeline trial
+  - known limitations Phase 0
